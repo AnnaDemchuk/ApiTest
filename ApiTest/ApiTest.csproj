@@ -135,8 +135,9 @@
   <ItemGroup>
     <None Include="FeatureFile\CreateCompany.feature" />
     <None Include="FeatureFile\CreateTask.feature" />
+    <None Include="FeatureFile\Search.feature" />
     <None Include="packages.config" />
-    <None Include="FeatureFile\Regisrer.feature" />
+    <None Include="FeatureFile\Register.feature" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
