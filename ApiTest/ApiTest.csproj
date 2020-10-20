@@ -129,6 +129,7 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Steps\CreateCompanySteps.cs" />
+    <Compile Include="Steps\CreateTaskSteps.cs" />
     <Compile Include="Steps\RegisterationSteps.cs" />
   </ItemGroup>
   <ItemGroup>
