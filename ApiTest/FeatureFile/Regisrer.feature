@@ -14,3 +14,4 @@ Scenario: Successful registeration
 	Then Name from response equal name of request
 	Then Email from response equal email of request
 	
+

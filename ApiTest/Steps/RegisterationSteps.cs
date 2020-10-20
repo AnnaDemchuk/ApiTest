@@ -28,8 +28,8 @@ namespace ApiTest.Steps
         {
             string now = DateTime.Now.ToString();
             string random = now.Replace(":", "").Replace(" ", "").Replace("/", "");
-            email = "user" + random + "@gmail.com";
-            name = "user" + random;
+            email = "user_a" + random + "@gmail.com";
+            name = "user_a" + random;
             password = random;
 
             userData = new Dictionary<string, string>
