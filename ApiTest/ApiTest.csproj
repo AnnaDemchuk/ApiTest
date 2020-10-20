@@ -128,12 +128,14 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Steps\CreateCompanySteps.cs" />
     <Compile Include="Steps\RegisterationSteps.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="FeatureFile\SpecFlowFeature2.feature" />
+    <None Include="FeatureFile\CreateCompany.feature" />
+    <None Include="FeatureFile\CreateTask.feature" />
     <None Include="packages.config" />
-    <None Include="FeatureFile\SpecFlowFeature1.feature" />
+    <None Include="FeatureFile\Regisrer.feature" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
