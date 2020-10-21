@@ -15,6 +15,10 @@
 	As a user
 	I want to enter word in search field
 
+	In order to have my account with my task
+	As a user
+	I want to register in the site
+
 Background: 
 Given Create rest client
 
@@ -50,3 +54,8 @@ Scenario: Successful searching information about user on email
 	When I send post searching request
 	Then Status response is 231
 	Then Users email from response equal email of request
+
+Scenario: Successfuly created user with tasks (existing)
+	Given Data for user is ready
+	When I send post request with user data
+	Then Users information from response equal information of request
