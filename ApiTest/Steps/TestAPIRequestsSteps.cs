@@ -23,11 +23,13 @@ namespace ApiTest.Steps
         string nameTask;
 
         Dictionary<string, string> userData;
-        string name;
-        string email;
+        string nameUser;
+        string emailUser;
         string password;
 
         Dictionary<string, string> searchingData;
+        Dictionary<string, object> userWithTaskData;
+        
 
 
         [Given(@"Create rest client")]
@@ -41,7 +43,7 @@ namespace ApiTest.Steps
         {
             string now = DateTime.Now.ToString();
             string random = now.Replace(":", "").Replace(" ", "").Replace("/", "");
-            nameCompany = "KingDom" + random;
+            nameCompany = "Kompany" + random;
             typeCompany = "ООО";
             emailOwner = "anna_victorya@gmail.com";
             emailUsersList.Add("victoriya12@gmail.com");
@@ -149,14 +151,14 @@ namespace ApiTest.Steps
         {
             string now = DateTime.Now.ToString();
             string random = now.Replace(":", "").Replace(" ", "").Replace("/", "");
-            email = "user_a" + random + "@gmail.com";
-            name = "user_a" + random;
+            emailUser = "user_a" + random + "@gmail.com";
+            nameUser = "user_a" + random;
             password = random;
 
             userData = new Dictionary<string, string>
             {
-                {"name", name },
-                {"email", email },
+                {"name", nameUser },
+                {"email", emailUser },
                 {"password", password }
             };
         }
@@ -175,7 +177,7 @@ namespace ApiTest.Steps
         {
             var temp = response.Content;
             JObject json = JObject.Parse(temp);
-            Assert.AreEqual(name, json["name"]?.ToString());
+            Assert.AreEqual(nameUser, json["name"]?.ToString());
         }
 
         [Then(@"Email from response equal email of request")]
@@ -183,7 +185,7 @@ namespace ApiTest.Steps
         {
             var temp = response.Content;
             JObject json = JObject.Parse(temp);
-            Assert.AreEqual(email, json["email"]?.ToString());
+            Assert.AreEqual(emailUser, json["email"]?.ToString());
         }
 
         //--------------------------------------
@@ -226,6 +228,98 @@ namespace ApiTest.Steps
             string responceEmail = json["results"][0]["email"]?.ToString();
             Assert.AreEqual(searchingData["query"], responceEmail);
         }
+
+
+        [Given(@"Data for user is ready")]
+        public void GivenDataForUserIsReady()
+        {
+            string now = DateTime.Now.ToString();
+            string random = now.Replace(":", "").Replace(" ", "").Replace("/", "");
+            emailUser = "user_a" + random + "@gmail.com";
+            nameUser = "user_a" + random;
+
+            userWithTaskData = new Dictionary<string, object>
+            {
+                {"email", emailUser },
+                {"name", nameUser },
+                {"tasks", new List<int> { 2962 }},
+                {"companies", new List<int> { 1221 }}
+            };
+        }
+
+        [When(@"I send post request with user data")]
+        public void WhenISendPostRequestWithUserData()
+        {
+            RestRequest request = new RestRequest("tasks/rest/createuser", Method.POST);
+            request.RequestFormat = DataFormat.Json;
+            request.AddJsonBody(userWithTaskData);
+            response = client.Execute(request);
+        }
+
+        [Then(@"Users information from response equal information of request")]
+        public void ThenUsersInformationFromResponseEqualInformationOfRequest()
+        {
+            var temp = response.Content;
+            JObject json = JObject.Parse(temp);
+            Assert.AreEqual(emailUser.ToLower(), json["email"].ToString());
+            Assert.AreEqual(nameUser, json["name"].ToString());
+        }
+
+        [Given(@"Data for login is ready")]
+        public void GivenDataForLoginIsReady()
+        {
+            userData = new Dictionary<string, string>();
+            userData.Add("name", "redsee");
+            userData.Add("email", "redsee@more.com");
+            userData.Add("password", "redsee");
+        }
+
+        [When(@"I send post request with login data")]
+        public void WhenISendPostRequestWithLoginData()
+        {
+            RestRequest request = new RestRequest("tasks/rest/dologin", Method.POST);
+            request.RequestFormat = DataFormat.Json;
+            request.AddJsonBody(userData);
+            response = client.Execute(request);
+        }
+
+        [Then(@"Server response is true")]
+        public void ThenServerResponseIsTrue()
+        {
+            var temp = response.Content;
+            JObject json = JObject.Parse(temp);
+            Assert.AreEqual($"True", json["result"]?.ToString().Trim());
+        }
+
+        //------------------------     
+
+        [Given(@"Data for search company is ready")]
+        public void GivenDataForSearchCompanyIsReady()
+        {
+            RestRequest request = new RestRequest("/tasks/rest/magicsearch", Method.POST);
+            request.RequestFormat = DataFormat.Json;
+            request.AddJsonBody(
+
+            searchingData = new Dictionary<string, string>()
+            {
+                {"query", "KingDom1021202042738PM" }
+            });
+
+            response = client.Execute(request);
+        }
+
+
+        [Then(@"Name company from response equal name company of request")]
+        public void ThenNameCompanyFromResponseEqualNameCompanyOfRequest()
+        {
+            var temp = response.Content;
+            JObject json = JObject.Parse(temp);
+            Assert.AreEqual("KingDom1021202042738PM", json["results"][0]["name"].ToString());
+        }
+
+        //------------------
+
+        
 
     }
 }

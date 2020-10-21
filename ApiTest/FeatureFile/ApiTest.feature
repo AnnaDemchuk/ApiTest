@@ -11,7 +11,19 @@
 	As a user
 	I want to register in the site
 
-	In order to search get information from database
+	In order to search get information about user from database
+	As a user
+	I want to enter word in search field
+
+	In order to have my account with my task
+	As a user
+	I want to register in the site
+
+	To log into your account
+	As a user
+	I want to check my password
+
+	In order to search get information about company from database
 	As a user
 	I want to enter word in search field
 
@@ -44,9 +56,32 @@ Scenario: Successful registeration
 	Then Name from response equal name of request
 	Then Email from response equal email of request
 
+
 @search
 Scenario: Successful searching information about user on email
 	Given Data for searching is ready 
 	When I send post searching request
 	Then Status response is 231
 	Then Users email from response equal email of request
+
+@auth
+Scenario: Successfuly creating user with tasks (existing)
+	Given Data for user is ready
+	When I send post request with user data
+	Then Users information from response equal information of request
+
+
+@login
+Scenario: Login into an account with valid data
+	Given Data for login is ready
+	When I send post request with login data
+	Then Status response is successful
+	Then Server response is true
+
+@search
+Scenario: Successful searching information about company
+	Given Data for search company is ready 
+	When I send post searching request
+	Then Status response is 233
+	Then Name company from response equal name company of request
+
