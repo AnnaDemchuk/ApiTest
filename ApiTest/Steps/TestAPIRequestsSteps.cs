@@ -3,6 +3,7 @@ using NUnit.Framework;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using TechTalk.SpecFlow;
 
 namespace ApiTest.Steps
@@ -29,8 +30,8 @@ namespace ApiTest.Steps
 
         Dictionary<string, string> searchingData;
         Dictionary<string, object> userWithTaskData;
-        
 
+        // Successful creating company
 
         [Given(@"Create rest client")]
         public void GivenCreateRestClient()
@@ -99,7 +100,7 @@ namespace ApiTest.Steps
             Assert.AreEqual(emailUsersList[1], json["company"]["users"][1]?.ToString());
         }
 
-        //--------------------------------------
+        // Successful creating task
 
         [Given(@"Data for create a new task is ready")]
         public void GivenDataForCreateANewTaskIsReady()
@@ -144,7 +145,8 @@ namespace ApiTest.Steps
             JObject json = JObject.Parse(temp);
             Assert.AreEqual("Задача успешно создана!", json["message"]?.ToString());
         }
-        //--------------------------------------
+
+        // Successful registeration
 
         [Given(@"Data for registration is ready")]
         public void GivenDataForRegistrationIsReady()
@@ -188,7 +190,7 @@ namespace ApiTest.Steps
             Assert.AreEqual(emailUser, json["email"]?.ToString());
         }
 
-        //--------------------------------------
+        // Successful searching information about user on email
 
         [Given(@"Data for searching is ready")]
         public void GivenDataForSearchingIsReady()
@@ -229,6 +231,7 @@ namespace ApiTest.Steps
             Assert.AreEqual(searchingData["query"], responceEmail);
         }
 
+        // Successfuly creating user with tasks (existing)
 
         [Given(@"Data for user is ready")]
         public void GivenDataForUserIsReady()
@@ -265,6 +268,8 @@ namespace ApiTest.Steps
             Assert.AreEqual(nameUser, json["name"].ToString());
         }
 
+        // Login into an account with valid data
+
         [Given(@"Data for login is ready")]
         public void GivenDataForLoginIsReady()
         {
@@ -291,7 +296,7 @@ namespace ApiTest.Steps
             Assert.AreEqual($"True", json["result"]?.ToString().Trim());
         }
 
-        //------------------------     
+        // Successful searching information about company     
 
         [Given(@"Data for search company is ready")]
         public void GivenDataForSearchCompanyIsReady()
@@ -317,9 +322,15 @@ namespace ApiTest.Steps
             Assert.AreEqual("KingDom1021202042738PM", json["results"][0]["name"].ToString());
         }
 
-        //------------------
+        // Add an avatar for a user page
 
-        
-
+        [When(@"I send an avatar to account")]
+        public void WhenISendAnAvatarToAccount()
+        {
+            emailUser = "anna_victorya@gmail.com";
+            RestRequest request = new RestRequest("/tasks/rest/addavatar/?email=" + emailUser, Method.POST);
+            request.AddFile("avatar", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\img\145.jpg"));
+            response = client.Execute(request);
+        }
     }
 }
