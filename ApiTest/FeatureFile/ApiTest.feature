@@ -19,6 +19,10 @@
 	As a user
 	I want to register in the site
 
+	To log into your account
+	As a user
+	I want to check my password
+
 Background: 
 Given Create rest client
 
@@ -55,7 +59,16 @@ Scenario: Successful searching information about user on email
 	Then Status response is 231
 	Then Users email from response equal email of request
 
-Scenario: Successfuly created user with tasks (existing)
+@auth
+Scenario: Successfuly creating user with tasks (existing)
 	Given Data for user is ready
 	When I send post request with user data
 	Then Users information from response equal information of request
+
+
+@login
+Scenario: Login into an account with valid data
+	Given Data for login is ready
+	When I send post request with login data
+	Then Status response is successful
+	Then Server response is true
