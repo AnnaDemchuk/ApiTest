@@ -27,6 +27,10 @@
 	As a user
 	I want to enter word in search field
 
+	In order my account was beautiful
+	As a user
+	I want to add avatar to page
+
 Background: 
 Given Create rest client
 
@@ -85,3 +89,7 @@ Scenario: Successful searching information about company
 	Then Status response is 233
 	Then Name company from response equal name company of request
 
+@add_avatar
+Scenario: Add an avatar for a user page
+	When I send an avatar to account
+	Then Status response is successful
