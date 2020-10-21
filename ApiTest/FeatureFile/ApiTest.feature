@@ -11,7 +11,7 @@
 	As a user
 	I want to register in the site
 
-	In order to search get information from database
+	In order to search get information about user from database
 	As a user
 	I want to enter word in search field
 
@@ -22,6 +22,10 @@
 	To log into your account
 	As a user
 	I want to check my password
+
+	In order to search get information about company from database
+	As a user
+	I want to enter word in search field
 
 Background: 
 Given Create rest client
@@ -52,6 +56,7 @@ Scenario: Successful registeration
 	Then Name from response equal name of request
 	Then Email from response equal email of request
 
+
 @search
 Scenario: Successful searching information about user on email
 	Given Data for searching is ready 
@@ -72,3 +77,11 @@ Scenario: Login into an account with valid data
 	When I send post request with login data
 	Then Status response is successful
 	Then Server response is true
+
+@search
+Scenario: Successful searching information about company
+	Given Data for search company is ready 
+	When I send post searching request
+	Then Status response is 233
+	Then Name company from response equal name company of request
+

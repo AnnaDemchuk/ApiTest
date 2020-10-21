@@ -29,7 +29,8 @@ namespace ApiTest.Steps
 
         Dictionary<string, string> searchingData;
         Dictionary<string, object> userWithTaskData;
-        Dictionary<string, object> userWithNewTaskData = new Dictionary<string, object>();
+        
+
 
         [Given(@"Create rest client")]
         public void GivenCreateRestClient()
@@ -290,7 +291,35 @@ namespace ApiTest.Steps
             Assert.AreEqual($"True", json["result"]?.ToString().Trim());
         }
 
+        //------------------------     
 
+        [Given(@"Data for search company is ready")]
+        public void GivenDataForSearchCompanyIsReady()
+        {
+            RestRequest request = new RestRequest("/tasks/rest/magicsearch", Method.POST);
+            request.RequestFormat = DataFormat.Json;
+            request.AddJsonBody(
+
+            searchingData = new Dictionary<string, string>()
+            {
+                {"query", "KingDom1021202042738PM" }
+            });
+
+            response = client.Execute(request);
+        }
+
+
+        [Then(@"Name company from response equal name company of request")]
+        public void ThenNameCompanyFromResponseEqualNameCompanyOfRequest()
+        {
+            var temp = response.Content;
+            JObject json = JObject.Parse(temp);
+            Assert.AreEqual("KingDom1021202042738PM", json["results"][0]["name"].ToString());
+        }
+
+        //------------------
+
+        
 
     }
 }
