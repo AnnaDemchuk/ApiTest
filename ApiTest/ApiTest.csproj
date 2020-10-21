@@ -131,6 +131,7 @@
     <Compile Include="Steps\CreateCompanySteps.cs" />
     <Compile Include="Steps\CreateTaskSteps.cs" />
     <Compile Include="Steps\RegisterationSteps.cs" />
+    <Compile Include="Steps\SearchSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FeatureFile\CreateCompany.feature" />
